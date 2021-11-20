@@ -114,7 +114,6 @@ const sortLinksBy = (links,sort,direction='asc') => {
 
 const addLink = asyncWrapper( async (req,res, next) => {
    const { historyId, historyName, link: theLink } = req.body;
-   console.log(historyId,historyName,theLink);
    if ((theLink && historyId) || (theLink && historyName)) {
       const { title, keywords, image, alt, metaDescription: desc } = await parseHtmlLink(theLink);
       // add it to database
