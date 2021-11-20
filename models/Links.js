@@ -1,18 +1,7 @@
 const mongoose = require('mongoose');
 
-const conn = mongoose.createConnection(
-  'mongodb://localhost:27017/chronicle',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  },
-);
 
-const { Schema } = mongoose;
-
-const links = new Schema({
+const links = new mongoose.Schema({
   url: {
     type: String,
     required: 'No URL Provided',
@@ -20,6 +9,7 @@ const links = new Schema({
   title: {
     type: String,
     required: 'No title provided',
+    maxlength: [40, 'Title is too long']
   },
   description: {
     type: String,
@@ -43,6 +33,6 @@ const links = new Schema({
   },
 });
 
-const Links = conn.model('Links', links);
+const Links = mongoose.model('Links', links);
 
 module.exports = Links;

@@ -1,18 +1,6 @@
 const mongoose = require('mongoose');
 
-const conn = mongoose.createConnection(
-  'mongodb://localhost:27017/chronicle',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  },
-);
-
-const { Schema } = mongoose;
-
-const digitalHistory = new Schema({
+const digitalHistory = new mongoose.Schema({
   name: {
     type: String,
     required: 'No Name Provided',
@@ -26,6 +14,6 @@ const digitalHistory = new Schema({
   },
 });
 
-const DigitalHistory = conn.model('DigitalHistory', digitalHistory);
+const DigitalHistory = mongoose.model('DigitalHistory', digitalHistory);
 
 module.exports = DigitalHistory;

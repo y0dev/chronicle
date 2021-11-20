@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const AddLink = require('./links');
+const connectDB = require('../../helpers/connectDB');
+const AddLink = require('./routes');
+const notFound = require('../../middleware/not-found');
+const errorHandlerMiddleWare = require('../../middleware/error-handler');
+require('dotenv').config();
 
 const app = express();
 
@@ -17,9 +21,20 @@ app.get('/', (req, res) => {
 
 AddLink(app);
 
-app.listen(8000, () => {
-  console.log('running on 8000');
-});
+app.use(notFound);
+app.use(errorHandlerMiddleWare);
+
+const start = async () => {
+  try {
+    const PORT = process.env.SERVER_PORT ||  8000;
+    await connectDB();
+    app.listen(PORT, console.log(`Server is running on http://localhost:${PORT}`));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+start();
 
 /*
 2. Focus on link agrregator applicaiton
